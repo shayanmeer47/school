@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 import django.http as http
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
+from .models import Message
 # Create your views here.
 
 def index(request):
@@ -67,3 +68,23 @@ def register(request):
             }
             return render(request, 'school/reg.html', {'data': data})
     return render(request, 'school/reg.html')
+
+
+def contact(request):
+
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        message = request.POST['message']
+        Message.objects.create(name=name, email=email, message=message)
+        data = {
+            'message': "Message sent successfully"
+        }
+        return render(request, 'school/contact.html', {'data': data})
+    
+    messages = Message.objects.filter(email='shehbazbalghari@gmail.com')
+    data = {
+        'messages': messages
+    }
+    
+    return render(request, 'school/contact.html', {'data': data})
