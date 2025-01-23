@@ -26,9 +26,13 @@
     <div>
         {% if data.messages %}
         {% for msg in data.messages %}
-        <p>Name: {{msg.name}}</p>
+        <a href="{% url 'edit-contact' msg.id %}">
+
+            <p>Name: {{msg.name}}</p>
         <p>Email: {{msg.email}}</p>
         <p>Message: {{msg.message}}</p>
+        </a>
+        <button type="button" onclick="window.location.href='{% url 'delete-contact' msg.id %}'">Delete</button>
 
         {% endfor %}
         {% endif %}

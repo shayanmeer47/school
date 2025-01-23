@@ -82,9 +82,39 @@ def contact(request):
         }
         return render(request, 'school/contact.html', {'data': data})
     
-    messages = Message.objects.filter(email='shehbazbalghari@gmail.com')
+    messages = Message.objects.all()
     data = {
         'messages': messages
     }
     
     return render(request, 'school/contact.html', {'data': data})
+
+
+def editContact(request, id):
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        message = request.POST['message']
+        msg = Message.objects.get(id=id)
+        msg.name = name
+        msg.email = email
+        msg.message = message
+        msg.save()
+        data = {
+            'message': "Message updated successfully"
+        }
+        return render(request, 'school/edit-contact.html', {'data': data})
+    
+    msg = Message.objects.get(id=id)
+    data = {
+        'msg': msg
+    }
+    return render(request, 'school/edit-contact.html', {'data': data})
+
+def deleteContact(request, id):
+    msg = Message.objects.get(id=id)
+    msg.delete()
+    data = {
+        'message': "Message deleted successfully"
+    }
+    return redirect('contact')
