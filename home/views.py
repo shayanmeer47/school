@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 import django.http as http
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import Message
+from .models import Message, Gallery
 # Create your views here.
 
 def index(request):
@@ -118,3 +118,11 @@ def deleteContact(request, id):
         'message': "Message deleted successfully"
     }
     return redirect('contact')
+
+
+def gallery(request):
+    gallery = Gallery.objects.all()
+    data = {
+        'gallery': gallery
+    }
+    return render(request, 'school/gallery.html', {'data': data})

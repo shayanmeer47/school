@@ -8,4 +8,5 @@ urlpatterns = [
     path('contact', views.contact, name='contact'),
     path('edit-message/<int:id>', views.editContact, name='edit-contact'),
     path('delete-message/<int:id>', views.deleteContact, name='delete-contact'),
+    path('gallery', views.gallery, name='gallery'),
 ]
